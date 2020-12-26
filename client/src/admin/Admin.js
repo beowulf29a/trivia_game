@@ -51,11 +51,11 @@ class Admin extends React.Component{
             userInfo:[],
             value: 0,
             questions:[],
-            submittedAnswers:[]
+            submittedAnswers:[],
+            questionElapseTime: 0
         };
         
         socket.connect(this.props.user);
-        console.log("constucting new admin page");
     }
     
     componentDidMount() {
@@ -70,6 +70,7 @@ class Admin extends React.Component{
       socket.close("get_question");
       socket.close("submit_answer");
       socket.close("getCurUsers");
+		  this.resetTimer();
     }
 
     getQuestion = question => {
@@ -83,6 +84,21 @@ class Admin extends React.Component{
       this.setState({submittedAnswers:curAnswers})
     }
 
+    resetTimer(){
+      this.setState({quuestionElapseTime:0});
+      clearTimeout(this.timerId);
+    }
+
+    startTimer(){
+      this.questionStartTime = new Date().getTime();
+		  this.timerId = setInterval(this.questionTimer.bind(this),100);
+    }
+
+    questionTimer(){
+      let curTick = new Date().getTime();
+      let elapseTime = ((curTick - this.questionStartTime)/1000);
+      this.setState({questionElapseTime: elapseTime});
+    }
 
     initializeQuestions(callback){
         var xhttp = new XMLHttpRequest();
@@ -128,7 +144,8 @@ class Admin extends React.Component{
 
     setCurrentQuestion(question){
       this.setState({curQuestion:question, submittedAnswers:[]});
-        socket.nextQuestion(question);
+      socket.nextQuestion(question);
+      this.startTimer();
     }
 
 
@@ -179,7 +196,7 @@ class Admin extends React.Component{
                 <AdminAddQuestion addQuestionHdlr={this.addQuestion.bind(this)}/>
               </TabPanel>
               <TabPanel value={this.state.value} index={1}>
-                <AdminGame user={this.props.user} question={this.state.curQuestion} submittedAnswers={this.state.submittedAnswers}/>
+                <AdminGame user={this.props.user} question={this.state.curQuestion} submittedAnswers={this.state.submittedAnswers} questionElapseTime={this.state.questionElapseTime}/>
               </TabPanel>
           </Grid>
           <Grid item>

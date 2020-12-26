@@ -1,5 +1,6 @@
 import React from 'react';
 import TextInputButton from '../components/TextInputButton'
+import { Grid } from '@material-ui/core';
 
 class User extends React.Component{
     handleUserClick(user) {
@@ -10,9 +11,18 @@ class User extends React.Component{
   
     render() {
       return (
-        <div>
+        <Grid container spacing={3} direction="column" justify="flex-start" alignItems="stretch">
+          <Grid item>
+            <h2>
+              Step right up! Step right up!
+              <br/>
+              Enter your name below to join in all the fun!
+            </h2>
+          </Grid>
+          <Grid item>
             <TextInputButton clkHandler={this.handleUserClick.bind(this)} custBtnText='Play' defaultInput='Enter your name' />
-        </div>
+          </Grid>
+        </Grid>
       );
     }
 }

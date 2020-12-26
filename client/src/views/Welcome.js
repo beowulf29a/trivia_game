@@ -21,14 +21,22 @@ class Welcome extends React.Component{
       return (
         <div style={wrapperStyle}>
         <Grid container spacing={3} direction="column" justify="flex-start" alignItems="stretch">
-          <Grid item>
+          <Grid item justify='center'>
           <Paper style={wrapperStyle}>
-            Welcome to our Trivia Game!
+            Miceli Family Renunion Trivia Game
           </Paper>
           </Grid>
           <Grid item>
           <Paper style={wrapperStyle}>
-            The game will consist of several rounds of various types of questions.  You will be asked to enter your name and then the game can begin!
+            Hi! Miceli Family Reunion!
+            <br/>
+            Your trivia game will be starting momentarily, but first we will need some information from you.
+            <br/>
+            No limits on team size.  All are welcome to join individually or play as a group.
+            <br/>
+            On the next page you will be required to enter your team name.  Be creative and remember, this is a family game.
+            <br/>
+            Good luck!
           <br/>
           <Button onClick={this.acceptTerms.bind(this)} variant="contained" color="secondary">
               Continue

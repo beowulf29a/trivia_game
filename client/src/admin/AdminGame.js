@@ -16,31 +16,10 @@ class AdminGame extends React.Component{
             curQuestion: props.question,
             questionNum:1,
             submittedAnswers: props.submittedAnswers
-			questionElpaseTime: 0
         };
-		this.timerId = -1;
     }
 
-    componentDidMount() {
-		this.timerId = setInterval(this.questionTimer.bind(this),100);
-    }
-
-    componentWillUnmount() {
-		resetTimer();
-    }
-	
-	questionTimer = function(){
-		let curTick = new Date().getTime();
-		this.setState({questionElpaseTime: this.state.questionElpaseTime + (curTick - this.lastTick)});
-		this.lastTick = curTick;
-	}
-	
-	resetTimer = function(){
-		this.setState({quuestionElapseTime:0});
-		clearTimeout(this.timerId);
-	}
-
-    showSubmittedAnswers = function(){
+    showSubmittedAnswers(){
       return (
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
@@ -67,6 +46,18 @@ class AdminGame extends React.Component{
       );
     }
 
+    formatTime(){
+      let seconds = this.props.questionElapseTime;
+      let minutes = seconds / 60;
+      if(minutes > 1){
+        minutes = Number.parseInt(minutes);
+        seconds -= minutes * 60;
+        return minutes + "min.  " + seconds.toFixed(1) +"sec.";
+      }else{
+        return seconds.toFixed(1) + "sec.";
+      }
+    }
+
     render() {
       return (
         <Grid
@@ -75,7 +66,7 @@ class AdminGame extends React.Component{
           <Grid>
             <Grid>
               <p>Question #{this.state.questionNum}</p>
-			  <p>Elapse time{this.state.questionElpaseTime}</p>
+			        <p>Question elapse time {this.formatTime()}</p>
             </Grid>
             <Grid>
               {this.state.curQuestion.question}

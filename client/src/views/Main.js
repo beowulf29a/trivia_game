@@ -2,7 +2,6 @@ import React from 'react';
 import User from './User'
 import Welcome from './Welcome'
 import Game from './Game'
-import Paper from '@material-ui/core/Paper';
 //import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import {Header} from '../components/Header';
